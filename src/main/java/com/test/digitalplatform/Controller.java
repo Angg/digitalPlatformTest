@@ -1,10 +1,9 @@
 package com.test.digitalplatform;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -24,10 +23,9 @@ public class Controller {
     }
 
     /* Post user data to ReqRes */
-    @GetMapping("/test2")
-    public ResponseEntity test2() {
-        ObjectDAO reqPayload = new ObjectDAO().setName("morpheus").setJob("leader");
-        return restTemplate.postForEntity("https://reqres.in/api/users", reqPayload, ObjectDAO.class);
+    @PostMapping(path = "/test2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity test2(@RequestBody ObjectDAO user) {
+        return restTemplate.postForEntity("https://reqres.in/api/users", user, ObjectDAO.class);
     }
 
     /* Get specific user with id number */
